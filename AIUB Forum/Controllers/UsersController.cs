@@ -1,19 +1,23 @@
-﻿using AIUB_Forum.Models.Database;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using AIUB_Forum.Models.Database;
 
 namespace AIUB_Forum.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly AIUB_ForumEntities2 _db = new AIUB_ForumEntities2();
+        private AIUB_ForumEntities2 db = new AIUB_ForumEntities2();
 
         // GET: Users
         public ActionResult Index()
         {
-            return View(_db.Users.ToList());
+            return View(db.Users.ToList());
         }
 
         // GET: Users/Details/5
@@ -23,7 +27,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = _db.Users.Find(id);
+            User user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -42,12 +46,12 @@ namespace AIUB_Forum.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,Name,Location,Email,AboutMe,Views,CreationDate,Reputation,ProfilePic,UserType")] User user)
+        public ActionResult Create([Bind(Include = "UserId,Location,Email,AboutMe,Views,CreationDate,Reputation,ProfilePic,UserType,Password,Username")] User user)
         {
             if (ModelState.IsValid)
             {
-                _db.Users.Add(user);
-                _db.SaveChanges();
+                db.Users.Add(user);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -61,7 +65,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = _db.Users.Find(id);
+            User user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -74,12 +78,12 @@ namespace AIUB_Forum.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserId,Name,Location,Email,AboutMe,Views,CreationDate,Reputation,ProfilePic,UserType")] User user)
+        public ActionResult Edit([Bind(Include = "UserId,Location,Email,AboutMe,Views,CreationDate,Reputation,ProfilePic,UserType,Password,Username")] User user)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(user).State = EntityState.Modified;
-                _db.SaveChanges();
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(user);
@@ -92,7 +96,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = _db.Users.Find(id);
+            User user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -105,9 +109,9 @@ namespace AIUB_Forum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var user = _db.Users.Find(id);
-            _db.Users.Remove(user);
-            _db.SaveChanges();
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -115,7 +119,7 @@ namespace AIUB_Forum.Controllers
         {
             if (disposing)
             {
-                _db.Dispose();
+                db.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -19,11 +19,12 @@ namespace AIUB_Forum.Models.Database
         {
             this.Comments = new HashSet<Comment>();
             this.Votes = new HashSet<Vote>();
+            this.Answers = new HashSet<Answer>();
         }
     
         public int PostId { get; set; }
         public System.DateTime CreateDate { get; set; }
-        public System.DateTime DeleteDate { get; set; }
+        public Nullable<System.DateTime> DeleteDate { get; set; }
         public string Score { get; set; }
         public string views { get; set; }
         public string Body { get; set; }
@@ -33,11 +34,14 @@ namespace AIUB_Forum.Models.Database
         public int AnswerCount { get; set; }
         public int ComentsCount { get; set; }
         public System.DateTime CloseDate { get; set; }
+        public Nullable<System.DateTime> ModifyDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vote> Votes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Answer> Answers { get; set; }
     }
 }
