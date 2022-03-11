@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
+using AIUB_Forum.Models.Database;
 
 namespace AIUB_Forum.Controllers
 {
@@ -8,19 +10,26 @@ namespace AIUB_Forum.Controllers
         {
             return View();
         }
-
-        public ActionResult About()
+        [HttpGet]
+        public ActionResult Login()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
-
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult Login(User user)
         {
-            ViewBag.Message = "Your contact page.";
+            var entities = new AIUB_ForumEntities2();
+            var data = (from e in entities.Users
+                        where e.Password.Equals(user.Password) &&
+                              e.Email.Equals(user.Email)
+                        select e).FirstOrDefault();
+            if (data != null)
+            {
+                return RedirectToAction("Index");
+            }
 
-            return View();
+            TempData["msg"] = "Invalid Credentials";
+            return RedirectToAction("Login");
         }
     }
 }
