@@ -35,7 +35,7 @@ namespace AIUB_Forum.Controllers
         // GET: Companies/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name");
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Location");
             return View();
         }
 
@@ -53,7 +53,7 @@ namespace AIUB_Forum.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", company.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Location", company.UserId);
             return View(company);
         }
 
@@ -69,7 +69,7 @@ namespace AIUB_Forum.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", company.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Location", company.UserId);
             return View(company);
         }
 
@@ -86,7 +86,7 @@ namespace AIUB_Forum.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", company.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Location", company.UserId);
             return View(company);
         }
 

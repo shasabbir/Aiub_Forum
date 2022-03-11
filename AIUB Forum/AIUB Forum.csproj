@@ -158,6 +158,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AIUBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Database\Answer.cs">
+      <DependentUpon>AIUBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Database\AnswerComment.cs">
+      <DependentUpon>AIUBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Database\Badge.cs">
       <DependentUpon>AIUBModel.tt</DependentUpon>
     </Compile>
@@ -237,6 +243,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
@@ -247,27 +254,26 @@
     <Content Include="Views\Companies\Details.cshtml" />
     <Content Include="Views\Companies\Edit.cshtml" />
     <Content Include="Views\Companies\Index.cshtml" />
-    <Content Include="Views\Badges\Create.cshtml" />
-    <Content Include="Views\Badges\Delete.cshtml" />
-    <Content Include="Views\Badges\Details.cshtml" />
-    <Content Include="Views\Badges\Edit.cshtml" />
-    <Content Include="Views\Badges\Index.cshtml" />
-    <Content Include="Views\Jobs\Create.cshtml" />
-    <Content Include="Views\Jobs\Delete.cshtml" />
-    <Content Include="Views\Jobs\Details.cshtml" />
-    <Content Include="Views\Jobs\Edit.cshtml" />
-    <Content Include="Views\Jobs\Index.cshtml" />
-    <Content Include="Views\JobPosts\Create.cshtml" />
-    <Content Include="Views\JobPosts\Delete.cshtml" />
-    <Content Include="Views\JobPosts\Details.cshtml" />
-    <Content Include="Views\JobPosts\Edit.cshtml" />
-    <Content Include="Views\JobPosts\Index.cshtml" />
     <Content Include="Views\Posts\Create.cshtml" />
     <Content Include="Views\Posts\Delete.cshtml" />
     <Content Include="Views\Posts\Details.cshtml" />
     <Content Include="Views\Posts\Edit.cshtml" />
     <Content Include="Views\Posts\Index.cshtml" />
-    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\JobPosts\Create.cshtml" />
+    <Content Include="Views\JobPosts\Delete.cshtml" />
+    <Content Include="Views\JobPosts\Details.cshtml" />
+    <Content Include="Views\JobPosts\Edit.cshtml" />
+    <Content Include="Views\JobPosts\Index.cshtml" />
+    <Content Include="Views\Jobs\Create.cshtml" />
+    <Content Include="Views\Jobs\Delete.cshtml" />
+    <Content Include="Views\Jobs\Details.cshtml" />
+    <Content Include="Views\Jobs\Edit.cshtml" />
+    <Content Include="Views\Jobs\Index.cshtml" />
+    <Content Include="Views\Badges\Create.cshtml" />
+    <Content Include="Views\Badges\Delete.cshtml" />
+    <Content Include="Views\Badges\Details.cshtml" />
+    <Content Include="Views\Badges\Edit.cshtml" />
+    <Content Include="Views\Badges\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

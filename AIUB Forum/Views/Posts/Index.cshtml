@@ -42,7 +42,10 @@
             @Html.DisplayNameFor(model => model.CloseDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User.Name)
+            @Html.DisplayNameFor(model => model.ModifyDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Location)
         </th>
         <th></th>
     </tr>
@@ -80,7 +83,10 @@
             @Html.DisplayFor(modelItem => item.CloseDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.User.Name)
+            @Html.DisplayFor(modelItem => item.ModifyDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.Location)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PostId }) |

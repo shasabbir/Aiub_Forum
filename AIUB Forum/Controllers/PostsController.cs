@@ -35,7 +35,7 @@ namespace AIUB_Forum.Controllers
         // GET: Posts/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name");
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Location");
             return View();
         }
 
@@ -44,7 +44,7 @@ namespace AIUB_Forum.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PostId,CreateDate,DeleteDate,Score,views,Body,UserId,UserName,Title,AnswerCount,ComentsCount,CloseDate")] Post post)
+        public ActionResult Create([Bind(Include = "PostId,CreateDate,DeleteDate,Score,views,Body,UserId,UserName,Title,AnswerCount,ComentsCount,CloseDate,ModifyDate")] Post post)
         {
             if (ModelState.IsValid)
             {
@@ -53,7 +53,7 @@ namespace AIUB_Forum.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", post.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Location", post.UserId);
             return View(post);
         }
 
@@ -69,7 +69,7 @@ namespace AIUB_Forum.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", post.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Location", post.UserId);
             return View(post);
         }
 
@@ -78,7 +78,7 @@ namespace AIUB_Forum.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PostId,CreateDate,DeleteDate,Score,views,Body,UserId,UserName,Title,AnswerCount,ComentsCount,CloseDate")] Post post)
+        public ActionResult Edit([Bind(Include = "PostId,CreateDate,DeleteDate,Score,views,Body,UserId,UserName,Title,AnswerCount,ComentsCount,CloseDate,ModifyDate")] Post post)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace AIUB_Forum.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", post.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Location", post.UserId);
             return View(post);
         }
 

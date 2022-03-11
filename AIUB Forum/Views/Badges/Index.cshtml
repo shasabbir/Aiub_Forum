@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Class)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User.Name)
+            @Html.DisplayNameFor(model => model.User.Location)
         </th>
         <th></th>
     </tr>
@@ -38,7 +38,7 @@
             @Html.DisplayFor(modelItem => item.Class)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.User.Name)
+            @Html.DisplayFor(modelItem => item.User.Location)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.BadgeId }) |

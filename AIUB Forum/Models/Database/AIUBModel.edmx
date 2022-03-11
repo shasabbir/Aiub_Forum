@@ -5,6 +5,31 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AIUB_ForumModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AnswerComments">
+          <Key>
+            <PropertyRef Name="AnsCmntId" />
+          </Key>
+          <Property Name="AnsCmntId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AnsId" Type="int" Nullable="false" />
+          <Property Name="Score" Type="varchar" MaxLength="50" />
+          <Property Name="Text" Type="varchar" MaxLength="100" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Answers">
+          <Key>
+            <PropertyRef Name="AnsId" />
+          </Key>
+          <Property Name="AnsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Body" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="CreateDate" Type="date" Nullable="false" />
+          <Property Name="ModifyDate" Type="date" />
+          <Property Name="DeleteDate" Type="date" />
+          <Property Name="PostId" Type="int" Nullable="false" />
+          <Property Name="Score" Type="int" Nullable="false" />
+          <Property Name="AnsUserId" Type="int" />
+        </EntityType>
         <EntityType Name="Badges">
           <Key>
             <PropertyRef Name="BadgeId" />
@@ -68,7 +93,8 @@
           </Key>
           <Property Name="PostId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreateDate" Type="date" Nullable="false" />
-          <Property Name="DeleteDate" Type="date" Nullable="false" />
+          <Property Name="ModifyDate" Type="date" />
+          <Property Name="DeleteDate" Type="date" />
           <Property Name="Score" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="views" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Body" Type="varchar" MaxLength="1000" Nullable="false" />
@@ -84,7 +110,7 @@
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Location" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
@@ -104,6 +130,30 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
         </EntityType>
+        <Association Name="FK_AnswerComments_Answers">
+          <End Role="Answers" Type="Self.Answers" Multiplicity="1" />
+          <End Role="AnswerComments" Type="Self.AnswerComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="AnsId" />
+            </Principal>
+            <Dependent Role="AnswerComments">
+              <PropertyRef Name="AnsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answers_Posts">
+          <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
+          <End Role="Answers" Type="Self.Answers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="PostId" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Badges_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Badges" Type="Self.Badges" Multiplicity="*" />
@@ -201,6 +251,8 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="AIUB_ForumModelStoreContainer">
+          <EntitySet Name="AnswerComments" EntityType="Self.AnswerComments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Answers" EntityType="Self.Answers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Badges" EntityType="Self.Badges" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
@@ -209,6 +261,14 @@
           <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Votes" EntityType="Self.Votes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AnswerComments_Answers" Association="Self.FK_AnswerComments_Answers">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="AnswerComments" EntitySet="AnswerComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answers_Posts" Association="Self.FK_Answers_Posts">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
           <AssociationSet Name="FK_Badges_User" Association="Self.FK_Badges_User">
             <End Role="User" EntitySet="User" />
             <End Role="Badges" EntitySet="Badges" />
@@ -317,7 +377,7 @@
           </Key>
           <Property Name="PostId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DeleteDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="0" />
           <Property Name="Score" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="views" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Body" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
@@ -330,13 +390,14 @@
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Posts" FromRole="Posts" ToRole="Comments" />
           <NavigationProperty Name="User" Relationship="Self.FK_Posts_User" FromRole="Posts" ToRole="User" />
           <NavigationProperty Name="Votes" Relationship="Self.FK_Votes_Posts" FromRole="Posts" ToRole="Votes" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Answers" Relationship="AIUB_ForumModel.FK_Answers_Posts" FromRole="Post" ToRole="Answer" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AboutMe" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
@@ -350,6 +411,7 @@
           <NavigationProperty Name="Companies" Relationship="Self.FK_Companies_User" FromRole="User" ToRole="Companies" />
           <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_User" FromRole="User" ToRole="Posts" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Vote">
           <Key>
@@ -498,7 +560,69 @@
             <End Role="Posts" EntitySet="Posts" />
             <End Role="Votes" EntitySet="Votes" />
           </AssociationSet>
+          <EntitySet Name="AnswerComments" EntityType="AIUB_ForumModel.AnswerComment" />
+          <EntitySet Name="Answers" EntityType="AIUB_ForumModel.Answer" />
+          <AssociationSet Name="FK_AnswerComments_Answers" Association="AIUB_ForumModel.FK_AnswerComments_Answers">
+            <End Role="Answer" EntitySet="Answers" />
+            <End Role="AnswerComment" EntitySet="AnswerComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answers_Posts" Association="AIUB_ForumModel.FK_Answers_Posts">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="Answer" EntitySet="Answers" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="AnswerComment">
+          <Key>
+            <PropertyRef Name="AnsCmntId" />
+          </Key>
+          <Property Name="AnsCmntId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AnsId" Type="Int32" Nullable="false" />
+          <Property Name="Score" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Text" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Answer" Relationship="AIUB_ForumModel.FK_AnswerComments_Answers" FromRole="AnswerComment" ToRole="Answer" />
+        </EntityType>
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="AnsId" />
+          </Key>
+          <Property Name="AnsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="0" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="0" />
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <Property Name="Score" Type="Int32" Nullable="false" />
+          <Property Name="AnsUserId" Type="Int32" />
+          <NavigationProperty Name="AnswerComments" Relationship="AIUB_ForumModel.FK_AnswerComments_Answers" FromRole="Answer" ToRole="AnswerComment" />
+          <NavigationProperty Name="Post" Relationship="AIUB_ForumModel.FK_Answers_Posts" FromRole="Answer" ToRole="Post" />
+        </EntityType>
+        <Association Name="FK_AnswerComments_Answers">
+          <End Type="AIUB_ForumModel.Answer" Role="Answer" Multiplicity="1" />
+          <End Type="AIUB_ForumModel.AnswerComment" Role="AnswerComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answer">
+              <PropertyRef Name="AnsId" />
+            </Principal>
+            <Dependent Role="AnswerComment">
+              <PropertyRef Name="AnsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answers_Posts">
+          <End Type="AIUB_ForumModel.Post" Role="Post" Multiplicity="1" />
+          <End Type="AIUB_ForumModel.Answer" Role="Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="PostId" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -570,6 +694,7 @@
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="AIUB_ForumModel.Post">
               <MappingFragment StoreEntitySet="Posts">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
                 <ScalarProperty Name="PostId" ColumnName="PostId" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
@@ -588,9 +713,9 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="AIUB_ForumModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="AboutMe" ColumnName="AboutMe" />
@@ -609,6 +734,33 @@
                 <ScalarProperty Name="PostId" ColumnName="PostId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AnswerComments">
+            <EntityTypeMapping TypeName="AIUB_ForumModel.AnswerComment">
+              <MappingFragment StoreEntitySet="AnswerComments">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="AnsId" ColumnName="AnsId" />
+                <ScalarProperty Name="AnsCmntId" ColumnName="AnsCmntId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Answers">
+            <EntityTypeMapping TypeName="AIUB_ForumModel.Answer">
+              <MappingFragment StoreEntitySet="Answers">
+                <ScalarProperty Name="AnsUserId" ColumnName="AnsUserId" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="AnsId" ColumnName="AnsId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
