@@ -24,7 +24,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Badge badge = _db.Badges.Find(id);
+            var badge = _db.Badges.Find(id);
             if (badge == null)
             {
                 return HttpNotFound();
@@ -64,7 +64,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Badge badge = _db.Badges.Find(id);
+            var badge = _db.Badges.Find(id);
             if (badge == null)
             {
                 return HttpNotFound();
@@ -97,7 +97,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Badge badge = _db.Badges.Find(id);
+            var badge = _db.Badges.Find(id);
             if (badge == null)
             {
                 return HttpNotFound();
@@ -110,7 +110,7 @@ namespace AIUB_Forum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Badge badge = _db.Badges.Find(id);
+            var badge = _db.Badges.Find(id);
             _db.Badges.Remove(badge);
             _db.SaveChanges();
             return RedirectToAction("Index");

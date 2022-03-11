@@ -24,7 +24,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobPost jobPost = _db.JobPosts.Find(id);
+            var jobPost = _db.JobPosts.Find(id);
             if (jobPost == null)
             {
                 return HttpNotFound();
@@ -64,7 +64,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobPost jobPost = _db.JobPosts.Find(id);
+            var jobPost = _db.JobPosts.Find(id);
             if (jobPost == null)
             {
                 return HttpNotFound();
@@ -97,7 +97,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobPost jobPost = _db.JobPosts.Find(id);
+            var jobPost = _db.JobPosts.Find(id);
             if (jobPost == null)
             {
                 return HttpNotFound();
@@ -110,7 +110,7 @@ namespace AIUB_Forum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            JobPost jobPost = _db.JobPosts.Find(id);
+            var jobPost = _db.JobPosts.Find(id);
             _db.JobPosts.Remove(jobPost);
             _db.SaveChanges();
             return RedirectToAction("Index");

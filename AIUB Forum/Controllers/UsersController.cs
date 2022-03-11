@@ -23,7 +23,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = _db.Users.Find(id);
+            var user = _db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -61,7 +61,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = _db.Users.Find(id);
+            var user = _db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -92,7 +92,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = _db.Users.Find(id);
+            var user = _db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -105,7 +105,7 @@ namespace AIUB_Forum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = _db.Users.Find(id);
+            var user = _db.Users.Find(id);
             _db.Users.Remove(user);
             _db.SaveChanges();
             return RedirectToAction("Index");

@@ -24,7 +24,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = _db.Companies.Find(id);
+            var company = _db.Companies.Find(id);
             if (company == null)
             {
                 return HttpNotFound();
@@ -64,7 +64,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = _db.Companies.Find(id);
+            var company = _db.Companies.Find(id);
             if (company == null)
             {
                 return HttpNotFound();
@@ -97,7 +97,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = _db.Companies.Find(id);
+            var company = _db.Companies.Find(id);
             if (company == null)
             {
                 return HttpNotFound();
@@ -110,7 +110,7 @@ namespace AIUB_Forum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Company company = _db.Companies.Find(id);
+            var company = _db.Companies.Find(id);
             _db.Companies.Remove(company);
             _db.SaveChanges();
             return RedirectToAction("Index");

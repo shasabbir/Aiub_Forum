@@ -24,7 +24,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Post post = _db.Posts.Find(id);
+            var post = _db.Posts.Find(id);
             if (post == null)
             {
                 return HttpNotFound();
@@ -64,7 +64,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Post post = _db.Posts.Find(id);
+            var post = _db.Posts.Find(id);
             if (post == null)
             {
                 return HttpNotFound();
@@ -97,7 +97,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Post post = _db.Posts.Find(id);
+            var post = _db.Posts.Find(id);
             if (post == null)
             {
                 return HttpNotFound();
@@ -110,7 +110,7 @@ namespace AIUB_Forum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Post post = _db.Posts.Find(id);
+            var post = _db.Posts.Find(id);
             _db.Posts.Remove(post);
             _db.SaveChanges();
             return RedirectToAction("Index");
