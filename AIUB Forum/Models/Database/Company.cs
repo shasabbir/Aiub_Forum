@@ -23,7 +23,12 @@ namespace AIUB_Forum.Models.Database
         public int CompanyId { get; set; }
         public int UserId { get; set; }
         public int JobPostCount { get; set; }
+        public string CompanyName { get; set; }
+        public string Location { get; set; }
+        public string CDescription { get; set; }
+        public string CCategory { get; set; }
     
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Job> Jobs { get; set; }
     }

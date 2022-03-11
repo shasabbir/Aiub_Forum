@@ -34,6 +34,22 @@
           <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="JobPostCount" Type="int" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CDescription" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CCategory" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JobPosts">
+          <Key>
+            <PropertyRef Name="JPId" />
+          </Key>
+          <Property Name="JPId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JPCreationDate" Type="date" Nullable="false" />
+          <Property Name="JPDeleteDate" Type="date" />
+          <Property Name="Views" Type="int" Nullable="false" />
+          <Property Name="Body" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Jobs">
           <Key>
@@ -45,7 +61,6 @@
           <Property Name="PositonName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Salary" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Loaction" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Posts">
           <Key>
@@ -124,6 +139,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Companies_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Companies" Type="Self.Companies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Companies">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobPosts_Jobs">
+          <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
+          <End Role="JobPosts" Type="Self.JobPosts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jobs">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="JobPosts">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Jobs_Companies">
           <End Role="Companies" Type="Self.Companies" Multiplicity="1" />
           <End Role="Jobs" Type="Self.Jobs" Multiplicity="*" />
@@ -164,6 +203,7 @@
           <EntitySet Name="Badges" EntityType="Self.Badges" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobPosts" EntityType="Self.JobPosts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -179,6 +219,14 @@
           <AssociationSet Name="FK_Comments_User" Association="Self.FK_Comments_User">
             <End Role="User" EntitySet="User" />
             <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Companies_User" Association="Self.FK_Companies_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Companies" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobPosts_Jobs" Association="Self.FK_JobPosts_Jobs">
+            <End Role="Jobs" EntitySet="Jobs" />
+            <End Role="JobPosts" EntitySet="JobPosts" />
           </AssociationSet>
           <AssociationSet Name="FK_Jobs_Companies" Association="Self.FK_Jobs_Companies">
             <End Role="Companies" EntitySet="Companies" />
@@ -230,7 +278,25 @@
           <Property Name="CompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="JobPostCount" Type="Int32" Nullable="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Companies_User" FromRole="Companies" ToRole="User" />
           <NavigationProperty Name="Jobs" Relationship="Self.FK_Jobs_Companies" FromRole="Companies" ToRole="Jobs" />
+        </EntityType>
+        <EntityType Name="JobPost">
+          <Key>
+            <PropertyRef Name="JPId" />
+          </Key>
+          <Property Name="JPId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JPCreationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="JPDeleteDate" Type="DateTime" Precision="0" />
+          <Property Name="Views" Type="Int32" Nullable="false" />
+          <Property Name="Body" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Job" Relationship="Self.FK_JobPosts_Jobs" FromRole="JobPosts" ToRole="Jobs" />
         </EntityType>
         <EntityType Name="Job">
           <Key>
@@ -242,8 +308,8 @@
           <Property Name="PositonName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Salary" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Loaction" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Company" Relationship="Self.FK_Jobs_Companies" FromRole="Jobs" ToRole="Companies" />
+          <NavigationProperty Name="JobPosts" Relationship="Self.FK_JobPosts_Jobs" FromRole="Jobs" ToRole="JobPosts" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
@@ -281,6 +347,7 @@
           <Property Name="UserType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Badges" Relationship="Self.FK_Badges_User" FromRole="User" ToRole="Badges" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_User" FromRole="User" ToRole="Comments" />
+          <NavigationProperty Name="Companies" Relationship="Self.FK_Companies_User" FromRole="User" ToRole="Companies" />
           <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_User" FromRole="User" ToRole="Posts" />
         </EntityType>
         <EntityType Name="Vote">
@@ -329,6 +396,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Companies_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Companies" Type="Self.Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Companies">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Jobs_Companies">
           <End Role="Companies" Type="Self.Company" Multiplicity="1" />
           <End Role="Jobs" Type="Self.Job" Multiplicity="*" />
@@ -338,6 +417,18 @@
             </Principal>
             <Dependent Role="Jobs">
               <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobPosts_Jobs">
+          <End Role="Jobs" Type="Self.Job" Multiplicity="1" />
+          <End Role="JobPosts" Type="Self.JobPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jobs">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="JobPosts">
+              <PropertyRef Name="JobId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -365,10 +456,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="AIUB_ForumEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="AIUB_ForumEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Badges" EntityType="Self.Badge" />
           <EntitySet Name="Comments" EntityType="Self.Comment" />
           <EntitySet Name="Companies" EntityType="Self.Company" />
+          <EntitySet Name="JobPosts" EntityType="Self.JobPost" />
           <EntitySet Name="Jobs" EntityType="Self.Job" />
           <EntitySet Name="Posts" EntityType="Self.Post" />
           <EntitySet Name="Users" EntityType="Self.User" />
@@ -385,9 +477,17 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
+          <AssociationSet Name="FK_Companies_User" Association="Self.FK_Companies_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Companies" EntitySet="Companies" />
+          </AssociationSet>
           <AssociationSet Name="FK_Jobs_Companies" Association="Self.FK_Jobs_Companies">
             <End Role="Companies" EntitySet="Companies" />
             <End Role="Jobs" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobPosts_Jobs" Association="Self.FK_JobPosts_Jobs">
+            <End Role="Jobs" EntitySet="Jobs" />
+            <End Role="JobPosts" EntitySet="JobPosts" />
           </AssociationSet>
           <AssociationSet Name="FK_Posts_User" Association="Self.FK_Posts_User">
             <End Role="User" EntitySet="Users" />
@@ -403,7 +503,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="AIUB_ForumModelStoreContainer" CdmEntityContainer="AIUB_ForumEntities1">
+        <EntityContainerMapping StorageEntityContainer="AIUB_ForumModelStoreContainer" CdmEntityContainer="AIUB_ForumEntities2">
           <EntitySetMapping Name="Badges">
             <EntityTypeMapping TypeName="AIUB_ForumModel.Badge">
               <MappingFragment StoreEntitySet="Badges">
@@ -434,6 +534,23 @@
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="JobPostCount" ColumnName="JobPostCount" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="CDescription" ColumnName="CDescription" />
+                <ScalarProperty Name="CCategory" ColumnName="CCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobPosts">
+            <EntityTypeMapping TypeName="AIUB_ForumModel.JobPost">
+              <MappingFragment StoreEntitySet="JobPosts">
+                <ScalarProperty Name="JPId" ColumnName="JPId" />
+                <ScalarProperty Name="JPCreationDate" ColumnName="JPCreationDate" />
+                <ScalarProperty Name="JPDeleteDate" ColumnName="JPDeleteDate" />
+                <ScalarProperty Name="Views" ColumnName="Views" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -446,7 +563,6 @@
                 <ScalarProperty Name="PositonName" ColumnName="PositonName" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Salary" ColumnName="Salary" />
-                <ScalarProperty Name="Loaction" ColumnName="Loaction" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

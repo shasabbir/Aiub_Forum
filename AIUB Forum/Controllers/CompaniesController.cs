@@ -10,107 +10,112 @@ using AIUB_Forum.Models.Database;
 
 namespace AIUB_Forum.Controllers
 {
-    public class UsersController : Controller
+    public class CompaniesController : Controller
     {
         private AIUB_ForumEntities2 db = new AIUB_ForumEntities2();
 
-        // GET: Users
+        // GET: Companies
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            var companies = db.Companies.Include(c => c.User);
+            return View(companies.ToList());
         }
 
-        // GET: Users/Details/5
+        // GET: Companies/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            Company company = db.Companies.Find(id);
+            if (company == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(company);
         }
 
-        // GET: Users/Create
+        // GET: Companies/Create
         public ActionResult Create()
         {
+            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name");
             return View();
         }
 
-        // POST: Users/Create
+        // POST: Companies/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,Name,Location,Email,AboutMe,Views,CreationDate,Reputation,ProfilePic,UserType")] User user)
+        public ActionResult Create([Bind(Include = "CompanyId,UserId,JobPostCount,CompanyName,Location,CDescription,CCategory")] Company company)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
+                db.Companies.Add(company);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(user);
+            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name", company.UserId);
+            return View(company);
         }
 
-        // GET: Users/Edit/5
+        // GET: Companies/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            Company company = db.Companies.Find(id);
+            if (company == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name", company.UserId);
+            return View(company);
         }
 
-        // POST: Users/Edit/5
+        // POST: Companies/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserId,Name,Location,Email,AboutMe,Views,CreationDate,Reputation,ProfilePic,UserType")] User user)
+        public ActionResult Edit([Bind(Include = "CompanyId,UserId,JobPostCount,CompanyName,Location,CDescription,CCategory")] Company company)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
+                db.Entry(company).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(user);
+            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name", company.UserId);
+            return View(company);
         }
 
-        // GET: Users/Delete/5
+        // GET: Companies/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            Company company = db.Companies.Find(id);
+            if (company == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(company);
         }
 
-        // POST: Users/Delete/5
+        // POST: Companies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
+            Company company = db.Companies.Find(id);
+            db.Companies.Remove(company);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

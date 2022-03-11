@@ -19,6 +19,7 @@ namespace AIUB_Forum.Models.Database
         {
             this.Badges = new HashSet<Badge>();
             this.Comments = new HashSet<Comment>();
+            this.Companies = new HashSet<Company>();
             this.Posts = new HashSet<Post>();
         }
     
@@ -37,6 +38,8 @@ namespace AIUB_Forum.Models.Database
         public virtual ICollection<Badge> Badges { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Company> Companies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Posts { get; set; }
     }

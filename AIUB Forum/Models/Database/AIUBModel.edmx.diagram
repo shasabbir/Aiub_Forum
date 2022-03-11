@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bdc4d3f133d54292879f63fc7978b150" Name="Diagram1">
+        <EntityTypeShape EntityType="AIUB_ForumModel.Badge" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AIUB_ForumModel.Comment" Width="1.5" PointX="8.25" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AIUB_ForumModel.Company" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AIUB_ForumModel.JobPost" Width="1.5" PointX="7.5" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AIUB_ForumModel.Job" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AIUB_ForumModel.Post" Width="1.5" PointX="3" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AIUB_ForumModel.User" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AIUB_ForumModel.Vote" Width="1.5" PointX="5.25" PointY="14.125" IsExpanded="true" />
+        <AssociationConnector Association="AIUB_ForumModel.FK_Badges_User" ManuallyRouted="false" />
+        <AssociationConnector Association="AIUB_ForumModel.FK_Comments_Posts" ManuallyRouted="false" />
+        <AssociationConnector Association="AIUB_ForumModel.FK_Comments_User" ManuallyRouted="false" />
+        <AssociationConnector Association="AIUB_ForumModel.FK_Companies_User" ManuallyRouted="false" />
+        <AssociationConnector Association="AIUB_ForumModel.FK_Jobs_Companies" ManuallyRouted="false" />
+        <AssociationConnector Association="AIUB_ForumModel.FK_JobPosts_Jobs" ManuallyRouted="false" />
+        <AssociationConnector Association="AIUB_ForumModel.FK_Posts_User" ManuallyRouted="false" />
+        <AssociationConnector Association="AIUB_ForumModel.FK_Votes_Posts" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

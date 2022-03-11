@@ -13,10 +13,10 @@ namespace AIUB_Forum.Models.Database
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class AIUB_ForumEntities1 : DbContext
+    public partial class AIUB_ForumEntities2 : DbContext
     {
-        public AIUB_ForumEntities1()
-            : base("name=AIUB_ForumEntities1")
+        public AIUB_ForumEntities2()
+            : base("name=AIUB_ForumEntities2")
         {
         }
     
@@ -28,6 +28,7 @@ namespace AIUB_Forum.Models.Database
         public virtual DbSet<Badge> Badges { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<JobPost> JobPosts { get; set; }
         public virtual DbSet<Job> Jobs { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<User> Users { get; set; }

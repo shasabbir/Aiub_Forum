@@ -14,14 +14,21 @@ namespace AIUB_Forum.Models.Database
     
     public partial class Job
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Job()
+        {
+            this.JobPosts = new HashSet<JobPost>();
+        }
+    
         public int JobId { get; set; }
         public int CompanyId { get; set; }
         public string JobType { get; set; }
         public string PositonName { get; set; }
         public string Description { get; set; }
         public string Salary { get; set; }
-        public string Loaction { get; set; }
     
         public virtual Company Company { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobPost> JobPosts { get; set; }
     }
 }

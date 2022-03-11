@@ -129,46 +129,54 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BadgesController.cs" />
+    <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JobPostsController.cs" />
+    <Compile Include="Controllers\JobsController.cs" />
+    <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Database\AIUBFourmModel.Context.cs">
+    <Compile Include="Models\Database\AIUBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AIUBFourmModel.Context.tt</DependentUpon>
+      <DependentUpon>AIUBModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Database\AIUBFourmModel.cs">
+    <Compile Include="Models\Database\AIUBModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AIUBFourmModel.tt</DependentUpon>
+      <DependentUpon>AIUBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Database\AIUBFourmModel.Designer.cs">
+    <Compile Include="Models\Database\AIUBModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AIUBFourmModel.edmx</DependentUpon>
+      <DependentUpon>AIUBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Database\Badge.cs">
-      <DependentUpon>AIUBFourmModel.tt</DependentUpon>
+      <DependentUpon>AIUBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Database\Comment.cs">
-      <DependentUpon>AIUBFourmModel.tt</DependentUpon>
+      <DependentUpon>AIUBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Database\Company.cs">
-      <DependentUpon>AIUBFourmModel.tt</DependentUpon>
+      <DependentUpon>AIUBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Database\Job.cs">
-      <DependentUpon>AIUBFourmModel.tt</DependentUpon>
+      <DependentUpon>AIUBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Database\JobPost.cs">
+      <DependentUpon>AIUBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Database\Post.cs">
-      <DependentUpon>AIUBFourmModel.tt</DependentUpon>
+      <DependentUpon>AIUBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Database\User.cs">
-      <DependentUpon>AIUBFourmModel.tt</DependentUpon>
+      <DependentUpon>AIUBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Database\Vote.cs">
-      <DependentUpon>AIUBFourmModel.tt</DependentUpon>
+      <DependentUpon>AIUBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -181,24 +189,24 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Database\AIUBFourmModel.Context.tt">
+    <Content Include="Models\Database\AIUBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AIUBFourmModel.edmx</DependentUpon>
-      <LastGenOutput>AIUBFourmModel.Context.cs</LastGenOutput>
+      <DependentUpon>AIUBModel.edmx</DependentUpon>
+      <LastGenOutput>AIUBModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Database\AIUBFourmModel.tt">
+    <Content Include="Models\Database\AIUBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AIUBFourmModel.edmx</DependentUpon>
-      <LastGenOutput>AIUBFourmModel.cs</LastGenOutput>
+      <DependentUpon>AIUBModel.edmx</DependentUpon>
+      <LastGenOutput>AIUBModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\Database\AIUBFourmModel.edmx">
+    <EntityDeploy Include="Models\Database\AIUBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>AIUBFourmModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>AIUBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Database\AIUBFourmModel.edmx.diagram">
-      <DependentUpon>AIUBFourmModel.edmx</DependentUpon>
+    <Content Include="Models\Database\AIUBModel.edmx.diagram">
+      <DependentUpon>AIUBModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -230,6 +238,31 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Companies\Create.cshtml" />
+    <Content Include="Views\Companies\Delete.cshtml" />
+    <Content Include="Views\Companies\Details.cshtml" />
+    <Content Include="Views\Companies\Edit.cshtml" />
+    <Content Include="Views\Companies\Index.cshtml" />
+    <Content Include="Views\Badges\Create.cshtml" />
+    <Content Include="Views\Badges\Delete.cshtml" />
+    <Content Include="Views\Badges\Details.cshtml" />
+    <Content Include="Views\Badges\Edit.cshtml" />
+    <Content Include="Views\Badges\Index.cshtml" />
+    <Content Include="Views\Jobs\Create.cshtml" />
+    <Content Include="Views\Jobs\Delete.cshtml" />
+    <Content Include="Views\Jobs\Details.cshtml" />
+    <Content Include="Views\Jobs\Edit.cshtml" />
+    <Content Include="Views\Jobs\Index.cshtml" />
+    <Content Include="Views\JobPosts\Create.cshtml" />
+    <Content Include="Views\JobPosts\Delete.cshtml" />
+    <Content Include="Views\JobPosts\Details.cshtml" />
+    <Content Include="Views\JobPosts\Edit.cshtml" />
+    <Content Include="Views\JobPosts\Index.cshtml" />
+    <Content Include="Views\Posts\Create.cshtml" />
+    <Content Include="Views\Posts\Delete.cshtml" />
+    <Content Include="Views\Posts\Details.cshtml" />
+    <Content Include="Views\Posts\Edit.cshtml" />
+    <Content Include="Views\Posts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
