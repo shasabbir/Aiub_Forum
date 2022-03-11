@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using AIUB_Forum.Models.Database;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using AIUB_Forum.Models.Database;
 
 namespace AIUB_Forum.Controllers
 {
     public class JobsController : Controller
     {
-        private AIUB_ForumEntities2 db = new AIUB_ForumEntities2();
+        private readonly AIUB_ForumEntities2 _db = new AIUB_ForumEntities2();
 
         // GET: Jobs
         public ActionResult Index()
         {
-            var jobs = db.Jobs.Include(j => j.Company);
+            var jobs = _db.Jobs.Include(j => j.Company);
             return View(jobs.ToList());
         }
 
@@ -28,7 +24,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Job job = db.Jobs.Find(id);
+            var job = _db.Jobs.Find(id);
             if (job == null)
             {
                 return HttpNotFound();
@@ -39,7 +35,7 @@ namespace AIUB_Forum.Controllers
         // GET: Jobs/Create
         public ActionResult Create()
         {
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName");
+            ViewBag.CompanyId = new SelectList(_db.Companies, "CompanyId", "CompanyName");
             return View();
         }
 
@@ -52,12 +48,12 @@ namespace AIUB_Forum.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Jobs.Add(job);
-                db.SaveChanges();
+                _db.Jobs.Add(job);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", job.CompanyId);
+            ViewBag.CompanyId = new SelectList(_db.Companies, "CompanyId", "CompanyName", job.CompanyId);
             return View(job);
         }
 
@@ -68,12 +64,12 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Job job = db.Jobs.Find(id);
+            var job = _db.Jobs.Find(id);
             if (job == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", job.CompanyId);
+            ViewBag.CompanyId = new SelectList(_db.Companies, "CompanyId", "CompanyName", job.CompanyId);
             return View(job);
         }
 
@@ -86,11 +82,11 @@ namespace AIUB_Forum.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(job).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(job).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", job.CompanyId);
+            ViewBag.CompanyId = new SelectList(_db.Companies, "CompanyId", "CompanyName", job.CompanyId);
             return View(job);
         }
 
@@ -101,7 +97,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Job job = db.Jobs.Find(id);
+            var job = _db.Jobs.Find(id);
             if (job == null)
             {
                 return HttpNotFound();
@@ -114,9 +110,9 @@ namespace AIUB_Forum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Job job = db.Jobs.Find(id);
-            db.Jobs.Remove(job);
-            db.SaveChanges();
+            var job = _db.Jobs.Find(id);
+            _db.Jobs.Remove(job);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -124,7 +120,7 @@ namespace AIUB_Forum.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
