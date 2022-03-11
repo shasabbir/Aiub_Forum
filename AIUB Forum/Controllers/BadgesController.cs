@@ -111,7 +111,7 @@ namespace AIUB_Forum.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             var badge = _db.Badges.Find(id);
-            _db.Badges.Remove(badge);
+            if (badge != null) _db.Badges.Remove(badge);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
