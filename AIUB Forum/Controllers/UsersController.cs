@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using AIUB_Forum.Models.Database;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using AIUB_Forum.Models.Database;
 
 namespace AIUB_Forum.Controllers
 {
     public class UsersController : Controller
     {
-        private AIUB_ForumEntities2 db = new AIUB_ForumEntities2();
+        private readonly AIUB_ForumEntities2 _db = new AIUB_ForumEntities2();
 
         // GET: Users
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            return View(_db.Users.ToList());
         }
 
         // GET: Users/Details/5
@@ -27,7 +23,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            var user = _db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -50,8 +46,8 @@ namespace AIUB_Forum.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
-                db.SaveChanges();
+                _db.Users.Add(user);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +61,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            var user = _db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -82,8 +78,8 @@ namespace AIUB_Forum.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(user).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(user);
@@ -96,7 +92,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            var user = _db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -109,9 +105,9 @@ namespace AIUB_Forum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
+            var user = _db.Users.Find(id);
+            _db.Users.Remove(user);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -119,7 +115,7 @@ namespace AIUB_Forum.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

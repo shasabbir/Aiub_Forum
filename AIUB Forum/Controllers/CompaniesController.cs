@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using AIUB_Forum.Models.Database;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using AIUB_Forum.Models.Database;
 
 namespace AIUB_Forum.Controllers
 {
     public class CompaniesController : Controller
     {
-        private AIUB_ForumEntities2 db = new AIUB_ForumEntities2();
+        private readonly AIUB_ForumEntities2 _db = new AIUB_ForumEntities2();
 
         // GET: Companies
         public ActionResult Index()
         {
-            var companies = db.Companies.Include(c => c.User);
+            var companies = _db.Companies.Include(c => c.User);
             return View(companies.ToList());
         }
 
@@ -28,7 +24,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = db.Companies.Find(id);
+            var company = _db.Companies.Find(id);
             if (company == null)
             {
                 return HttpNotFound();
@@ -39,7 +35,7 @@ namespace AIUB_Forum.Controllers
         // GET: Companies/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name");
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name");
             return View();
         }
 
@@ -52,12 +48,12 @@ namespace AIUB_Forum.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Companies.Add(company);
-                db.SaveChanges();
+                _db.Companies.Add(company);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name", company.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", company.UserId);
             return View(company);
         }
 
@@ -68,12 +64,12 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = db.Companies.Find(id);
+            var company = _db.Companies.Find(id);
             if (company == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name", company.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", company.UserId);
             return View(company);
         }
 
@@ -86,11 +82,11 @@ namespace AIUB_Forum.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(company).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(company).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name", company.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", company.UserId);
             return View(company);
         }
 
@@ -101,7 +97,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = db.Companies.Find(id);
+            var company = _db.Companies.Find(id);
             if (company == null)
             {
                 return HttpNotFound();
@@ -114,9 +110,9 @@ namespace AIUB_Forum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Company company = db.Companies.Find(id);
-            db.Companies.Remove(company);
-            db.SaveChanges();
+            var company = _db.Companies.Find(id);
+            _db.Companies.Remove(company);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -124,7 +120,7 @@ namespace AIUB_Forum.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using AIUB_Forum.Models.Database;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using AIUB_Forum.Models.Database;
 
 namespace AIUB_Forum.Controllers
 {
     public class PostsController : Controller
     {
-        private AIUB_ForumEntities2 db = new AIUB_ForumEntities2();
+        private readonly AIUB_ForumEntities2 _db = new AIUB_ForumEntities2();
 
         // GET: Posts
         public ActionResult Index()
         {
-            var posts = db.Posts.Include(p => p.User);
+            var posts = _db.Posts.Include(p => p.User);
             return View(posts.ToList());
         }
 
@@ -28,7 +24,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Post post = db.Posts.Find(id);
+            var post = _db.Posts.Find(id);
             if (post == null)
             {
                 return HttpNotFound();
@@ -39,7 +35,7 @@ namespace AIUB_Forum.Controllers
         // GET: Posts/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name");
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name");
             return View();
         }
 
@@ -52,12 +48,12 @@ namespace AIUB_Forum.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Posts.Add(post);
-                db.SaveChanges();
+                _db.Posts.Add(post);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name", post.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", post.UserId);
             return View(post);
         }
 
@@ -68,12 +64,12 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Post post = db.Posts.Find(id);
+            var post = _db.Posts.Find(id);
             if (post == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name", post.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", post.UserId);
             return View(post);
         }
 
@@ -86,11 +82,11 @@ namespace AIUB_Forum.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(post).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(post).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name", post.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", post.UserId);
             return View(post);
         }
 
@@ -101,7 +97,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Post post = db.Posts.Find(id);
+            var post = _db.Posts.Find(id);
             if (post == null)
             {
                 return HttpNotFound();
@@ -114,9 +110,9 @@ namespace AIUB_Forum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Post post = db.Posts.Find(id);
-            db.Posts.Remove(post);
-            db.SaveChanges();
+            var post = _db.Posts.Find(id);
+            _db.Posts.Remove(post);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -124,7 +120,7 @@ namespace AIUB_Forum.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

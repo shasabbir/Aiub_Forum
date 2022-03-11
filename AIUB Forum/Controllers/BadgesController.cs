@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using AIUB_Forum.Models.Database;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using AIUB_Forum.Models.Database;
 
 namespace AIUB_Forum.Controllers
 {
     public class BadgesController : Controller
     {
-        private AIUB_ForumEntities2 db = new AIUB_ForumEntities2();
+        private readonly AIUB_ForumEntities2 _db = new AIUB_ForumEntities2();
 
         // GET: Badges
         public ActionResult Index()
         {
-            var badges = db.Badges.Include(b => b.User);
+            var badges = _db.Badges.Include(b => b.User);
             return View(badges.ToList());
         }
 
@@ -28,7 +24,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Badge badge = db.Badges.Find(id);
+            var badge = _db.Badges.Find(id);
             if (badge == null)
             {
                 return HttpNotFound();
@@ -39,7 +35,7 @@ namespace AIUB_Forum.Controllers
         // GET: Badges/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name");
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name");
             return View();
         }
 
@@ -52,12 +48,12 @@ namespace AIUB_Forum.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Badges.Add(badge);
-                db.SaveChanges();
+                _db.Badges.Add(badge);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name", badge.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", badge.UserId);
             return View(badge);
         }
 
@@ -68,12 +64,12 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Badge badge = db.Badges.Find(id);
+            var badge = _db.Badges.Find(id);
             if (badge == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name", badge.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", badge.UserId);
             return View(badge);
         }
 
@@ -86,11 +82,11 @@ namespace AIUB_Forum.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(badge).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(badge).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "Name", badge.UserId);
+            ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name", badge.UserId);
             return View(badge);
         }
 
@@ -101,7 +97,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Badge badge = db.Badges.Find(id);
+            var badge = _db.Badges.Find(id);
             if (badge == null)
             {
                 return HttpNotFound();
@@ -114,9 +110,9 @@ namespace AIUB_Forum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Badge badge = db.Badges.Find(id);
-            db.Badges.Remove(badge);
-            db.SaveChanges();
+            var badge = _db.Badges.Find(id);
+            if (badge != null) _db.Badges.Remove(badge);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -124,7 +120,7 @@ namespace AIUB_Forum.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
