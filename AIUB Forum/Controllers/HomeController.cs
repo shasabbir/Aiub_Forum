@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using AIUB_Forum.Models.Database;
+using System.Linq;
 using System.Web.Mvc;
-using AIUB_Forum.Models.Database;
 
 namespace AIUB_Forum.Controllers
 {

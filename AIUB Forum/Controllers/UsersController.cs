@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using AIUB_Forum.Models.Database;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using AIUB_Forum.Models.Database;
 
 namespace AIUB_Forum.Controllers
 {
     public class UsersController : Controller
     {
-        private AIUB_ForumEntities2 db = new AIUB_ForumEntities2();
+        private readonly AIUB_ForumEntities2 db = new AIUB_ForumEntities2();
 
         // GET: Users
         public ActionResult Index()
