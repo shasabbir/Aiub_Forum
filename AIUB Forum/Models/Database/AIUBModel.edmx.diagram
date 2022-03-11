@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="bdc4d3f133d54292879f63fc7978b150" Name="Diagram1">
-        <EntityTypeShape EntityType="AIUB_ForumModel.Badge" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AIUB_ForumModel.Badge" Width="1.5" PointX="3.625" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="AIUB_ForumModel.Comment" Width="1.5" PointX="8.25" PointY="13.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AIUB_ForumModel.Company" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AIUB_ForumModel.JobPost" Width="1.5" PointX="7.5" PointY="9.75" IsExpanded="true" />
