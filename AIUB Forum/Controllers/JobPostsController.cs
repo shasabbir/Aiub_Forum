@@ -8,12 +8,12 @@ namespace AIUB_Forum.Controllers
 {
     public class JobPostsController : Controller
     {
-        private readonly AIUB_ForumEntities2 db = new AIUB_ForumEntities2();
+        private readonly AIUB_ForumEntities2 _db = new AIUB_ForumEntities2();
 
         // GET: JobPosts
         public ActionResult Index()
         {
-            var jobPosts = db.JobPosts.Include(j => j.Job);
+            var jobPosts = _db.JobPosts.Include(j => j.Job);
             return View(jobPosts.ToList());
         }
 
@@ -24,7 +24,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobPost jobPost = db.JobPosts.Find(id);
+            JobPost jobPost = _db.JobPosts.Find(id);
             if (jobPost == null)
             {
                 return HttpNotFound();
@@ -35,7 +35,7 @@ namespace AIUB_Forum.Controllers
         // GET: JobPosts/Create
         public ActionResult Create()
         {
-            ViewBag.JobId = new SelectList(db.Jobs, "JobId", "JobType");
+            ViewBag.JobId = new SelectList(_db.Jobs, "JobId", "JobType");
             return View();
         }
 
@@ -48,12 +48,12 @@ namespace AIUB_Forum.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.JobPosts.Add(jobPost);
-                db.SaveChanges();
+                _db.JobPosts.Add(jobPost);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.JobId = new SelectList(db.Jobs, "JobId", "JobType", jobPost.JobId);
+            ViewBag.JobId = new SelectList(_db.Jobs, "JobId", "JobType", jobPost.JobId);
             return View(jobPost);
         }
 
@@ -64,12 +64,12 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobPost jobPost = db.JobPosts.Find(id);
+            JobPost jobPost = _db.JobPosts.Find(id);
             if (jobPost == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.JobId = new SelectList(db.Jobs, "JobId", "JobType", jobPost.JobId);
+            ViewBag.JobId = new SelectList(_db.Jobs, "JobId", "JobType", jobPost.JobId);
             return View(jobPost);
         }
 
@@ -82,11 +82,11 @@ namespace AIUB_Forum.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(jobPost).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(jobPost).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.JobId = new SelectList(db.Jobs, "JobId", "JobType", jobPost.JobId);
+            ViewBag.JobId = new SelectList(_db.Jobs, "JobId", "JobType", jobPost.JobId);
             return View(jobPost);
         }
 
@@ -97,7 +97,7 @@ namespace AIUB_Forum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobPost jobPost = db.JobPosts.Find(id);
+            JobPost jobPost = _db.JobPosts.Find(id);
             if (jobPost == null)
             {
                 return HttpNotFound();
@@ -110,9 +110,9 @@ namespace AIUB_Forum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            JobPost jobPost = db.JobPosts.Find(id);
-            db.JobPosts.Remove(jobPost);
-            db.SaveChanges();
+            JobPost jobPost = _db.JobPosts.Find(id);
+            _db.JobPosts.Remove(jobPost);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +120,7 @@ namespace AIUB_Forum.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
