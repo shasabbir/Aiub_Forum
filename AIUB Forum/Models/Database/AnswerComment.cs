@@ -20,7 +20,6 @@ namespace AIUB_Forum.Models.Database
         public string Text { get; set; }
         public System.DateTime Date { get; set; }
         public int UserId { get; set; }
-        public string Username { get; set; }
     
         public virtual Answer Answer { get; set; }
     }

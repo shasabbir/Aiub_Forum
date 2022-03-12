@@ -1,4 +1,5 @@
-﻿using AIUB_Forum.Models.Database;
+﻿using System.Data.Entity;
+using AIUB_Forum.Models.Database;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -8,10 +9,12 @@ namespace AIUB_Forum.Controllers
     // [Authorize]
     public class HomeController : Controller
     {
+        private readonly AIUB_ForumEntities2 _db = new AIUB_ForumEntities2();
         [Authorize]
         public ActionResult Index()
         {
-            return View();
+            var posts = _db.Posts.Include(p => p.User);
+            return View(posts.ToList());
         }
         [HttpGet]
         public ActionResult Login()

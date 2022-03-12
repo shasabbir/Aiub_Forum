@@ -19,7 +19,6 @@ namespace AIUB_Forum.Models.Database
         public string Score { get; set; }
         public string Text { get; set; }
         public System.DateTime Date { get; set; }
-        public string UserName { get; set; }
         public int UserId { get; set; }
     
         public virtual Post Post { get; set; }
