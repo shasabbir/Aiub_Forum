@@ -44,7 +44,7 @@ namespace AIUB_Forum.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PostId,CreateDate,DeleteDate,Score,views,Body,UserId,UserName,Title,AnswerCount,ComentsCount,CloseDate,ModifyDate")] Post post)
+        public ActionResult Create([Bind(Include = "PostId,CreateDate,Body,UserId,Title")] Post post)
         {
             if (ModelState.IsValid)
             {
