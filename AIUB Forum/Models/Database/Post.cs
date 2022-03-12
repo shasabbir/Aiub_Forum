@@ -29,11 +29,10 @@ namespace AIUB_Forum.Models.Database
         public string views { get; set; }
         public string Body { get; set; }
         public int UserId { get; set; }
-        public string UserName { get; set; }
         public string Title { get; set; }
         public int AnswerCount { get; set; }
         public int ComentsCount { get; set; }
-        public System.DateTime CloseDate { get; set; }
+        public Nullable<System.DateTime> CloseDate { get; set; }
         public Nullable<System.DateTime> ModifyDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
