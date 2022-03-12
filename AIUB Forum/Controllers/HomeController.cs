@@ -1,11 +1,13 @@
 ﻿using AIUB_Forum.Models.Database;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace AIUB_Forum.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
             return View();
@@ -13,6 +15,7 @@ namespace AIUB_Forum.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            if (User.Identity.IsAuthenticated) return RedirectToAction("Index");
             return View();
         }
         [HttpPost]
@@ -25,10 +28,27 @@ namespace AIUB_Forum.Controllers
                         select e).FirstOrDefault();
             if (data != null)
             {
+                FormsAuthentication.SetAuthCookie("data.Username", false);
+                //Session["username"]=data.Username;
                 return RedirectToAction("Index");
             }
 
             TempData["msg"] = "Invalid Credentials";
+            return RedirectToAction("Login");
+        }
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Register(User user)
+        {
+            return RedirectToAction("Index");
+        }
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }
     }
