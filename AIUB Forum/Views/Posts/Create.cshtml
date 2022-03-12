@@ -6,15 +6,19 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
 <div class="form-horizontal">
     <h4>Question</h4>
     <hr /> 
+    <form action="/Posts/Create" method="post">
+        <label for="Title" class="label">Title</label>
+        <input type="text" name="Title" placeholder="Title" class="form-control"/>
+        @Html.ValidationMessageFor(model => model.Title, "", new {@class = "text-danger"})
+        <label for="Body" class="label">Body</label>
+        <textarea name="Body" class="form-control"></textarea>
+        @Html.ValidationMessageFor(model => model.Body, "", new {@class = "text-danger"})
+        <input type="submit" value="Create" class="btn btn-default"/>
+    </form>
     
-    <input type="submit" value="Create" class="btn btn-default" />
     
 </div>
 }
