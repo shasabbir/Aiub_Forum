@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="AIUB_ForumModel.JobPost" Width="1.5" PointX="7.5" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AIUB_ForumModel.Job" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AIUB_ForumModel.Post" Width="1.5" PointX="3" PointY="13.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="AIUB_ForumModel.User" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AIUB_ForumModel.User" Width="1.5" PointX="0.5" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="AIUB_ForumModel.Vote" Width="1.5" PointX="5.25" PointY="14.125" IsExpanded="true" />
         <AssociationConnector Association="AIUB_ForumModel.FK_Badges_User" ManuallyRouted="false" />
         <AssociationConnector Association="AIUB_ForumModel.FK_Comments_Posts" ManuallyRouted="false" />
@@ -21,8 +21,8 @@
         <AssociationConnector Association="AIUB_ForumModel.FK_JobPosts_Jobs" ManuallyRouted="false" />
         <AssociationConnector Association="AIUB_ForumModel.FK_Posts_User" ManuallyRouted="false" />
         <AssociationConnector Association="AIUB_ForumModel.FK_Votes_Posts" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="AIUB_ForumModel.AnswerComment" Width="1.5" PointX="7.5" PointY="18.125" />
-        <EntityTypeShape EntityType="AIUB_ForumModel.Answer" Width="1.5" PointX="5.25" PointY="17.875" />
+        <EntityTypeShape EntityType="AIUB_ForumModel.AnswerComment" Width="1.5" PointX="7.625" PointY="16.75" />
+        <EntityTypeShape EntityType="AIUB_ForumModel.Answer" Width="1.5" PointX="5.375" PointY="16.5" />
         <AssociationConnector Association="AIUB_ForumModel.FK_AnswerComments_Answers" />
         <AssociationConnector Association="AIUB_ForumModel.FK_Answers_Posts" />
       </Diagram>

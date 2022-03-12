@@ -111,7 +111,7 @@ namespace AIUB_Forum.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             var company = _db.Companies.Find(id);
-            _db.Companies.Remove(company);
+            if (company != null) _db.Companies.Remove(company);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }

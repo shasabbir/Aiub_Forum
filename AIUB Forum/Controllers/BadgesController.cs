@@ -1,4 +1,5 @@
-﻿using AIUB_Forum.Models.Database;
+﻿using AIUB_Forum.Auth;
+using AIUB_Forum.Models.Database;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -6,6 +7,7 @@ using System.Web.Mvc;
 
 namespace AIUB_Forum.Controllers
 {
+    [AdminAccess]
     public class BadgesController : Controller
     {
         private readonly AIUB_ForumEntities2 _db = new AIUB_ForumEntities2();

@@ -1,4 +1,5 @@
-﻿using AIUB_Forum.Models.Database;
+﻿using AIUB_Forum.Auth;
+using AIUB_Forum.Models.Database;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -6,17 +7,20 @@ using System.Web.Mvc;
 
 namespace AIUB_Forum.Controllers
 {
+    [AdminAccess]
     public class UsersController : Controller
     {
         private readonly AIUB_ForumEntities2 _db = new AIUB_ForumEntities2();
 
         // GET: Users
+        
         public ActionResult Index()
         {
             return View(_db.Users.ToList());
         }
 
         // GET: Users/Details/5
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -44,14 +48,11 @@ namespace AIUB_Forum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserId,Location,Email,AboutMe,Views,CreationDate,Reputation,ProfilePic,UserType,Password,Username")] User user)
         {
-            if (ModelState.IsValid)
-            {
-                _db.Users.Add(user);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            if (!ModelState.IsValid) return View(user);
+            _db.Users.Add(user);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
 
-            return View(user);
         }
 
         // GET: Users/Edit/5
@@ -76,13 +77,10 @@ namespace AIUB_Forum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "UserId,Location,Email,AboutMe,Views,CreationDate,Reputation,ProfilePic,UserType,Password,Username")] User user)
         {
-            if (ModelState.IsValid)
-            {
-                _db.Entry(user).State = EntityState.Modified;
-                _db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(user);
+            if (!ModelState.IsValid) return View(user);
+            _db.Entry(user).State = EntityState.Modified;
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Users/Delete/5
@@ -106,7 +104,7 @@ namespace AIUB_Forum.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             var user = _db.Users.Find(id);
-            _db.Users.Remove(user);
+            if (user != null) _db.Users.Remove(user);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
