@@ -5,6 +5,7 @@ using System.Web.Security;
 
 namespace AIUB_Forum.Controllers
 {
+    // [Authorize]
     public class HomeController : Controller
     {
         [Authorize]
@@ -18,6 +19,7 @@ namespace AIUB_Forum.Controllers
             if (User.Identity.IsAuthenticated) return RedirectToAction("Index");
             return View();
         }
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult Login(User user)
         {
@@ -29,7 +31,7 @@ namespace AIUB_Forum.Controllers
             if (data != null)
             {
                 FormsAuthentication.SetAuthCookie("data.Username", false);
-                //Session["username"]=data.Username;
+                Session["usertype"] = data.UserType;
                 return RedirectToAction("Index");
             }
 
@@ -46,6 +48,7 @@ namespace AIUB_Forum.Controllers
         {
             return RedirectToAction("Index");
         }
+        [Authorize]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();

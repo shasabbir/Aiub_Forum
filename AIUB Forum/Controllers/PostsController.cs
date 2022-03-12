@@ -111,7 +111,7 @@ namespace AIUB_Forum.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             var post = _db.Posts.Find(id);
-            _db.Posts.Remove(post);
+            if (post != null) _db.Posts.Remove(post);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
