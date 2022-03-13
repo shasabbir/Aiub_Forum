@@ -1,0 +1,74 @@
+﻿@model AIUB_Forum.Models.Database.Post
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="">@Model.Title</h2>
+<p>Question: @Model.Body</p>
+<div>
+    <hr />
+    <dl class="">
+        <dt>
+            Created At:
+        </dt>
+
+        <dd>
+            @Model.CreateDate
+        </dd>
+        @if (Model.ModifyDate != null)
+        {
+            <dt>
+                Modify Date:
+            </dt>
+
+            <dd>
+                @Model.ModifyDate
+            </dd>
+        }
+    </dl>
+</div>
+
+<div>
+    Answers<hr />
+    Add Answer:
+           <form action="/Posts/CreateAns" method="post">
+               Answer:
+               <input type="text" name="Body" placeholder="Answer" class="form-control" />
+               @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+               <input type="hidden" name="CreateDate" value=@DateTime.UtcNow.Date />edit here
+               <input type="hidden" name="PostId" value=@Model.PostId />
+               <input type="hidden" name="Score" value="0" />
+               <input type="hidden" name="AnsUserId" value="2" />
+               <input type="submit" value="CreateAns" class="btn btn-default" />
+           </form>
+    @foreach (var answer in Model.Answers)
+    {
+        <span>@answer.AnsUserId :</span> @answer.Body<br />
+                                                     <form action="/Posts/CreateAnsReply" method="post">
+                                                         Reply: 
+                                                         <input type="hidden" name="AnsId" value=@answer.AnsId />
+                                                         <input type="hidden" name="Score" value="0" />
+                                                         <input type="text" name="Text" placeholder="Reply" class="form-control" />
+                                                         <input type="hidden" name="Date" value=@DateTime.UtcNow.Date />edit here
+                                                         <input type="hidden" name="UserId" value="2" />
+                                                         <input style="visibility: hidden;" type="submit" value="CreateAnsReply" class="btn btn-default" />
+                                                     </form>
+        foreach (var ac in answer.AnswerComments)
+        {
+            <span>@ac.UserId :</span> @ac.Text <br />
+        }<hr /><hr />
+    }
+    @if (Model.Answers.Count == 0)
+    {
+        <h6>no answer yet</h6>
+    }
+</div>
+
+@if (Model.UserId == 2)
+{
+    <a class="btn btn-default" href="/posts/edit/@Model.PostId">Edit</a>
+}
+<a class="btn btn-default" href="/posts">Browse Al Questions</a>
+
+

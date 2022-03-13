@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AIUB_Forum.Models.Database.Post>
+﻿@model List<AIUB_Forum.Models.Database.Post>
 
 @{
     ViewBag.Title = "Index";
@@ -6,90 +6,54 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<a href="/Posts/Create">Post Question</a>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CreateDate)
+            Title
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DeleteDate)
+            Body
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Score)
+            user
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.views)
+
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Body)
-        </th>
-        
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AnswerCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ComentsCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CloseDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifyDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.Location)
-        </th>
-        <th></th>
+
+</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreateDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeleteDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Score)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.views)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Body)
-        </td>
-       
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AnswerCount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ComentsCount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CloseDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifyDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.Location)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PostId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PostId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PostId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+<tr>
+    
+    <td>
+        <a href="/posts/view/@item.PostId">@item.Title</a>
+    </td>
+    <td>
+        @item.Body.ToString().Substring(0, 5) ....
+    </td>
+    <td>
+        @item.UserId
+    </td>
+    <td>
+        @if (@item.UserId == 2)
+        {
 
+            <a class="btn btn-info" href="/posts/Edit/@item.PostId">Edit</a>
+            <a class="btn btn-danger" href="/posts/Delete/@item.PostId">Delete</a>
+
+        }
+    </td>
+    <td>
+        <small>Posted at: @item.CreateDate</small>
+    </td>
+    </tr>
+    }
+    
 </table>
+edit here

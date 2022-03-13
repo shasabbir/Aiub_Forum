@@ -1,67 +1,22 @@
-﻿@model IEnumerable<AIUB_Forum.Models.Database.Post>
+﻿
 
 @{
     ViewBag.Title = "Home Page";
 }
-
+<br />
+<br />
+<br />
 <p>
-    @*@Html.ActionLink("Create New", "/Post/Create")*@
-    <a href="/Posts/Create">Ask Question</a>
+    <a class="btn btn-danger" href="/Posts/">See All Questions</a>
+    <a class="btn btn-danger" href="/Posts/Create">Ask a Question</a>
+    <a class="btn btn-danger" href="/Jobs">Jobs</a>
+
 </p>
-<table class="table">
-    <tr>
-        
-        <th>
-            @Html.DisplayNameFor(model => model.Score)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.views)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Body)
-        </th>
-       
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AnswerCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ComentsCount)
-        </th>
-       
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Score)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.views)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Body)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AnswerCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ComentsCount)
-            </td>
-            <td>
-                @* @Html.ActionLink("Details", "Details", new { id = item.PostId }) |*@
-                <a href="/Post/Details/@item.PostId">Details</a>
-            </td>
-        </tr>
+<style>
+    body {
+        background-image: url('https://www.aiub.edu/Files/Uploads/original/banner-3.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
     }
-
-</table>
+</style>

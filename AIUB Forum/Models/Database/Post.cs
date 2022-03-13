@@ -6,7 +6,7 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System.ComponentModel.DataAnnotations;
 namespace AIUB_Forum.Models.Database
 {
     using System;
@@ -21,14 +21,16 @@ namespace AIUB_Forum.Models.Database
             this.Votes = new HashSet<Vote>();
             this.Answers = new HashSet<Answer>();
         }
-    
+        
         public int PostId { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> DeleteDate { get; set; }
         public string Score { get; set; }
         public string views { get; set; }
+        [Required]
         public string Body { get; set; }
         public int UserId { get; set; }
+        [Required]
         public string Title { get; set; }
         public int AnswerCount { get; set; }
         public int ComentsCount { get; set; }
